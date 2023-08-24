@@ -41,35 +41,52 @@ document.addEventListener('DOMContentLoaded', () => {
             output.textContent = 'Please drop an XML file.';
         }
     });
-    
+
     function xmlToJson(xml) {
-        const dataNode = xml.querySelector('data');
-        const items = dataNode.querySelectorAll('item');
-    
-        const result = {
-            data: Array.from(items).map(item => ({
-                id: item.querySelector('id').textContent,
-                name: item.querySelector('name').textContent,
-                price: item.querySelector('price').textContent
-            }))
-        };
-    
+        const result = {};
+        parseNode(result, xml.documentElement);
         return result;
     }
     
-});
-
-const downloadButton = document.getElementById('downloadButton');
-downloadButton.addEventListener('click', () => {
-    const jsonContent = output.textContent;
-    if (jsonContent) {
-        const currentDate = new Date();
-        const fileName = `json_${currentDate.toISOString()}.json`;
-
-        const blob = new Blob([jsonContent], { type: 'application/json' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = fileName;
-        link.click();
+    function parseNode(obj, node) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            const nodeName = node.nodeName;
+            if (!obj[nodeName]) {
+                obj[nodeName] = {};
+            }
+    
+            if (node.hasAttributes()) {
+                const attributes = node.attributes;
+                for (let i = 0; i < attributes.length; i++) {
+                    const attr = attributes[i];
+                    obj[nodeName][`@${attr.nodeName}`] = attr.nodeValue;
+                }
+            }
+    
+            if (node.hasChildNodes()) {
+                const children = node.childNodes;
+                for (let i = 0; i < children.length; i++) {
+                    const childNode = children[i];
+                    parseNode(obj[nodeName], childNode);
+                }
+            }
+        } else if (node.nodeType === Node.TEXT_NODE) {
+            obj['#text'] = node.textContent.trim();
+        }
     }
+    
+    const downloadButton = document.getElementById('downloadButton');
+    downloadButton.addEventListener('click', () => {
+        const jsonContent = output.textContent;
+        if (jsonContent) {
+            const currentDate = new Date();
+            const fileName = `json_${currentDate.toISOString()}.json`;
+
+            const blob = new Blob([jsonContent], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+        }
+    });
 });
