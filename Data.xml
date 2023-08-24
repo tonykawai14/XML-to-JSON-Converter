@@ -1,0 +1,52 @@
+<data>
+    <item>
+        <id>1</id>
+        <name>Item 1</name>
+        <price>10.99</price>
+    </item>
+    <item>
+        <id>2</id>
+        <name>Item 2</name>
+        <price>15.49</price>
+    </item>
+    <item>
+        <id>3</id>
+        <name>Item 3</name>
+        <price>5.99</price>
+    </item>
+    <item>
+        <id>4</id>
+        <name>Item 4</name>
+        <price>8.75</price>
+    </item>
+    <item>
+        <id>5</id>
+        <name>Item 5</name>
+        <price>12.25</price>
+    </item>
+    <item>
+        <id>6</id>
+        <name>Item 6</name>
+        <price>20.00</price>
+    </item>
+    <item>
+        <id>7</id>
+        <name>Item 7</name>
+        <price>6.99</price>
+    </item>
+    <item>
+        <id>8</id>
+        <name>Item 8</name>
+        <price>9.50</price>
+    </item>
+    <item>
+        <id>9</id>
+        <name>Item 9</name>
+        <price>14.99</price>
+    </item>
+    <item>
+        <id>10</id>
+        <name>Item 10</name>
+        <price>18.25</price>
+    </item>
+</data>
